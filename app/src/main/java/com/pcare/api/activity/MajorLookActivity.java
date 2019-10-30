@@ -32,6 +32,9 @@ public class MajorLookActivity extends SimpleBaseActivity<MajorLookPresenter> im
     TextureView textureView;
 
     private MajorLookPresenter presenter;
+    private String userId;
+    private String type;
+//    private Camera2Helper mCamera2Helper;
 
     @Override
     public int getLayoutId() {
@@ -47,16 +50,16 @@ public class MajorLookActivity extends SimpleBaseActivity<MajorLookPresenter> im
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-//        startCamera();
+        userId = getIntent().getStringExtra("userid");
+        type = getIntent().getStringExtra("type");
+        startCamera();
+        presenter.initRequest(userId,type);
     }
 
     //点击人脸识别按钮的方法
     @OnClick(R.id.look_start)
     public void start(View view){
-      finish();
-
+        finish();
     }
 
     //开启摄像头
@@ -84,6 +87,12 @@ public class MajorLookActivity extends SimpleBaseActivity<MajorLookPresenter> im
     @Override
     protected void onPause() {
         super.onPause();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         presenter.closeSession();
     }
 }

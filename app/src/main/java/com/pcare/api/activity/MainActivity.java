@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +22,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toFace(View view) {
-        startActivity(new Intent(this, MajorLookActivity.class));
+        EditText text = findViewById(R.id.user_id);
+        Intent intent = new Intent(this, MajorLookActivity.class);
+        intent.putExtra("userid", text.getText().toString());
+        switch (view.getTag().toString()) {
+            case "verify":
+                intent.putExtra("type", "verify");
+                break;
+            case "register":
+                intent.putExtra("type", "register");
+                break;
+
+        }
+        startActivity(intent);
     }
 
     public void toSpeak(View view) {
